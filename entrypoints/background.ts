@@ -1,7 +1,7 @@
 export default defineBackground(() => {
   browser.runtime.onInstalled.addListener((detail) => {
     if (detail.reason === 'install') {
-      console.log('Extension installed');
+      if (import.meta.env.DEV) console.log('Extension installed');
     }
   });
 });

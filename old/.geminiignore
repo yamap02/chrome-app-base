@@ -1,0 +1,12 @@
+# Dependencies / build artifacts
+**/node_modules/
+**/.next/
+**/dist/
+**/build/
+**/out/
+**/coverage/
+**/.wxt/
+**/package-lock.json
+
+# OS files
+.DS_Store

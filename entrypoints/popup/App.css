@@ -1,0 +1,73 @@
+#root {
+  width: 300px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+h1 {
+  font-size: 1.25rem;
+  margin: 0;
+  color: #1a73e8;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: #5f6368;
+  margin: 0;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+}
+
+.setting-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.setting-label {
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: #202124;
+}
+
+.setting-desc {
+  font-size: 0.75rem;
+  color: #5f6368;
+}
+
+.toggle {
+  min-width: 52px;
+  padding: 0.375rem 0.75rem;
+  border-radius: 16px;
+  border: 1px solid #dadce0;
+  background-color: #f1f3f4;
+  color: #5f6368;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle.active {
+  background-color: #1a73e8;
+  border-color: #1a73e8;
+  color: #ffffff;
+}
+
+.toggle:hover {
+  opacity: 0.9;
+}

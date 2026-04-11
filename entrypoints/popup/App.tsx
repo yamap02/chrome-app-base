@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import { settingsStorage } from '@/utils/storage';
+import { useEffect, useState } from "react";
+import "./App.css";
+import { settingsStorage } from "@/utils/storage";
 
 function App() {
   const [enabled, setEnabled] = useState(true);
@@ -25,14 +25,14 @@ function App() {
       <div className="setting-row">
         <div className="setting-info">
           <span className="setting-label">Extension</span>
-          <span className="setting-desc">{enabled ? 'Active' : 'Disabled'}</span>
+          <span className="setting-desc">{enabled ? "Active" : "Disabled"}</span>
         </div>
         <button
-          className={`toggle ${enabled ? 'active' : ''}`}
+          className={`toggle ${enabled ? "active" : ""}`}
           onClick={handleToggle}
           aria-pressed={enabled}
         >
-          {enabled ? 'ON' : 'OFF'}
+          {enabled ? "ON" : "OFF"}
         </button>
       </div>
     </div>

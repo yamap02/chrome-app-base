@@ -15,12 +15,8 @@ export default defineConfig({
   },
   webExt: {
     // 自動操作によるログインブロックを回避するためのフラグ
-    chromiumArgs: [
-      '--disable-blink-features=AutomationControlled',
-    ],
+    chromiumArgs: ["--disable-blink-features=AutomationControlled"],
     // 起動時に自動で開くページ（開発対象サイトに変更する）
-    startUrls: [
-      'https://www.google.com',
-    ],
+    startUrls: ["https://www.google.com"],
   },
 });

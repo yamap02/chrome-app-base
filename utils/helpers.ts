@@ -12,7 +12,7 @@
  * matchesPattern('https://other.com/', 'https://example.com/*')      // false
  */
 export function matchesPattern(url: string, pattern: string): boolean {
-  const escaped = pattern.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
-  const regex = new RegExp('^' + escaped.replace(/\*/g, '.*') + '$');
+  const escaped = pattern.replace(/[.+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp("^" + escaped.replace(/\*/g, ".*") + "$");
   return regex.test(url);
 }

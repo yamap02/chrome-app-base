@@ -1,0 +1,18 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": [
+    "wxt.config.ts",
+    "entrypoints/background.ts",
+    "entrypoints/content.ts",
+    "entrypoints/popup/main.tsx",
+    "tests/e2e/**/*.ts",
+    "utils/**/*.test.ts"
+  ],
+  "project": [
+    "entrypoints/**/*.{ts,tsx}",
+    "utils/**/*.{ts,tsx}"
+  ],
+  "ignoreDependencies": [
+    "@wxt-dev/module-react"
+  ]
+}

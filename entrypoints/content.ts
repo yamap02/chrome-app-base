@@ -1,16 +1,18 @@
+import { logDebug } from "@/utils/logger";
+
+const CONTENT_SCRIPT_MATCHES = ["https://*.example.com/*"];
+
+function startContentScript(currentUrl: string): () => void {
+  logDebug("Content script attached", { url: currentUrl });
+
+  return () => {
+    logDebug("Content script detached", { url: currentUrl });
+  };
+}
+
 export default defineContentScript({
-  // 対象サイトのURLパターンに変更する
-  matches: ["https://*.example.com/*"],
+  matches: CONTENT_SCRIPT_MATCHES,
   main() {
-    if (import.meta.env.DEV) console.log("Content script running on:", window.location.href);
-
-    // ここに各サイト固有のロジックを実装する
-    // 例: const observer = new MutationObserver(...);
-
-    // クリーンアップ関数を返す（拡張機能が無効化・アンロードされた際に呼ばれる）
-    return () => {
-      // イベントリスナー、Observer、注入した要素などを削除する
-      // 例: observer.disconnect();
-    };
+    return startContentScript(window.location.href);
   },
 });

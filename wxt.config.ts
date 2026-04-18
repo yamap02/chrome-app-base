@@ -1,22 +1,19 @@
 import { defineConfig } from "wxt";
 
-// See https://wxt.dev/api/config.html
+const EXTENSION_NAME = "Chrome Extension Base";
+
 export default defineConfig({
   modules: ["@wxt-dev/module-react"],
   manifest: {
-    // 拡張機能の名前を変更する
-    name: "My Chrome Extension",
+    name: EXTENSION_NAME,
+    short_name: "Ext Base",
+    description: "WXT + React + TypeScript based Chrome extension template",
     permissions: ["storage"],
-    // 必要に応じてホスト権限を追加する
-    // host_permissions: ["https://example.com/*"],
-    content_security_policy: {
-      extension_pages: "script-src 'self'; object-src 'self';",
+    action: {
+      default_title: EXTENSION_NAME,
     },
   },
   webExt: {
-    // 自動操作によるログインブロックを回避するためのフラグ
-    chromiumArgs: ["--disable-blink-features=AutomationControlled"],
-    // 起動時に自動で開くページ（開発対象サイトに変更する）
-    startUrls: ["https://www.google.com"],
+    startUrls: ["https://example.com"],
   },
 });

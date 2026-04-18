@@ -1,4 +1,5 @@
 import { Component, ReactNode } from "react";
+import { logDebug } from "@/utils/logger";
 
 interface Props {
   children: ReactNode;
@@ -16,12 +17,16 @@ export class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
+  componentDidCatch(error: Error): void {
+    logDebug("Popup rendering failed", error);
+  }
+
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: "1rem", color: "#d32f2f", fontSize: "0.875rem" }}>
-          <p style={{ margin: "0 0 0.5rem", fontWeight: 600 }}>エラーが発生しました</p>
-          <small style={{ color: "#555" }}>{this.state.error?.message}</small>
+        <div className="error-boundary" role="alert">
+          <p className="error-boundary-title">popup error</p>
+          <small className="error-boundary-message">{this.state.error?.message}</small>
         </div>
       );
     }

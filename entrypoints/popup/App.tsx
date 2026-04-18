@@ -1,41 +1,35 @@
-import { useEffect, useState } from "react";
 import "./App.css";
-import { settingsStorage } from "@/utils/storage";
+import { SettingsToggle } from "./components/SettingsToggle";
+import { useSettings } from "./hooks/useSettings";
 
 function App() {
-  const [enabled, setEnabled] = useState(true);
-
-  useEffect(() => {
-    settingsStorage.getValue().then((settings) => {
-      setEnabled(settings.enabled);
-    });
-  }, []);
-
-  const handleToggle = async () => {
-    const newValue = !enabled;
-    setEnabled(newValue);
-    await settingsStorage.setValue({ enabled: newValue });
-  };
+  const { errorMessage, isLoaded, isPending, settings, status, toggle } = useSettings();
+  const isActionDisabled = !isLoaded || isPending;
 
   return (
-    <div className="container">
-      <h1>My Extension</h1>
-      <p className="description">Configure your extension settings.</p>
+    <main className="app-shell">
+      <header className="hero">
+        <p className="hero-badge">Chrome Extension Base</p>
+        <h1 className="hero-title">拡張状態管理</h1>
+        <p className="hero-description">popup から永続設定制御。React 状態と WXT storage 同期。</p>
+      </header>
 
-      <div className="setting-row">
-        <div className="setting-info">
-          <span className="setting-label">Extension</span>
-          <span className="setting-desc">{enabled ? "Active" : "Disabled"}</span>
-        </div>
-        <button
-          className={`toggle ${enabled ? "active" : ""}`}
-          onClick={handleToggle}
-          aria-pressed={enabled}
-        >
-          {enabled ? "ON" : "OFF"}
-        </button>
-      </div>
-    </div>
+      <SettingsToggle
+        description={status.description}
+        disabled={isActionDisabled}
+        isEnabled={settings.enabled}
+        label={status.actionLabel}
+        onToggle={() => {
+          void toggle();
+        }}
+        title={status.title}
+      />
+
+      <footer className="app-footer">
+        <span className="footer-status">{isLoaded ? "Storage ready" : "Loading settings"}</span>
+        {errorMessage ? <p className="error-text">{errorMessage}</p> : null}
+      </footer>
+    </main>
   );
 }
 

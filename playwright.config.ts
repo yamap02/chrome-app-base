@@ -1,20 +1,27 @@
 import { defineConfig, devices } from "@playwright/test";
 
-export default defineConfig({
+const baseConfig = {
   testDir: "./tests/e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: "html",
+  reporter: process.env.CI ? "html" : "list",
   use: {
     trace: "on-first-retry",
     viewport: { width: 1280, height: 720 },
   },
   projects: [
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      name: "chrome",
+      use: {
+        ...devices["Desktop Chrome"],
+        channel: "chrome",
+      },
     },
   ],
+} satisfies Parameters<typeof defineConfig>[0];
+
+export default defineConfig({
+  ...baseConfig,
+  ...(process.env.CI ? { workers: 1 } : {}),
 });

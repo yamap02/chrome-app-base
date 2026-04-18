@@ -9,7 +9,6 @@ Chrome 拡張で頻出する最低限の土台を同梱済み。
 - background / content script エントリーポイント
 - `storage` 権限を使う設定永続化
 - Vitest によるユニットテスト
-- Playwright による E2E テスト
 - Oxlint / Oxfmt / Knip による保守支援
 
 ## 前提環境
@@ -36,7 +35,6 @@ npm run zip:firefox   # Firefox 向け配布 ZIP 生成
 npm run compile       # TypeScript 型検査
 npm test              # Vitest ユニットテスト
 npm run test:watch    # ユニットテスト watch
-npm run test:e2e      # Playwright E2E テスト
 npm run lint          # Oxlint
 npm run lint:fix      # Oxlint 自動修正
 npm run format        # Oxfmt 整形
@@ -98,8 +96,6 @@ npm run knip          # 未使用コード検出
 |       |-- App.css
 |       |-- style.css
 |       `-- main.tsx
-|-- tests/e2e/
-|   `-- basic.spec.ts
 |-- utils/
 |   |-- helpers.ts
 |   |-- helpers.test.ts
@@ -107,7 +103,6 @@ npm run knip          # 未使用コード検出
 |-- public/icon/
 |-- wxt.config.ts
 |-- vitest.config.ts
-|-- playwright.config.ts
 `-- tsconfig.json
 ```
 
@@ -164,15 +159,10 @@ npm run knip          # 未使用コード検出
 - スキーム不一致
 - 正規表現特殊文字のエスケープ
 
-### E2E テスト
-
-`tests/e2e/basic.spec.ts` で Chromium 起動と URL 遷移を検証。現状は Google への遷移確認のみ。
-
 ## 補足
 
 - `tsconfig.json` は `.wxt/tsconfig.json` 継承
 - `@/` エイリアスでルート参照可能
-- `playwright-report/` は Playwright HTML レポート出力先
 - `assets/package-lock.json` が別配置で存在
 
 ## このテンプレート使用開始時の最低変更点
@@ -181,4 +171,3 @@ npm run knip          # 未使用コード検出
 - `entrypoints/content.ts` の `matches` と本体処理
 - `entrypoints/popup/App.tsx` の表示文言
 - `utils/storage.ts` の設定項目
-- `tests/e2e/basic.spec.ts` の遷移先

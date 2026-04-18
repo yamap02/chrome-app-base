@@ -19,7 +19,6 @@
     "compile": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test",
     "postinstall": "wxt prepare"
   },
   "dependencies": {
@@ -27,7 +26,6 @@
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@wxt-dev/module-react": "^1.1.5",

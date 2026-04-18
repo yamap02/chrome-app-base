@@ -13,7 +13,6 @@ npm run dev          # 開発サーバー起動（.wxt/user-dataにログイン�
 npm run build        # プロダクションビルド → .output/chrome-mv3/
 npm test             # Vitestユニットテスト
 npm run test:watch   # テストをウォッチモードで実行
-npm run test:e2e     # PlaywrightでE2Eテスト
 npm run compile      # TypeScript型チェック（emit不要）
 npm run zip          # 配布用ZIPを生成
 ```
@@ -40,7 +39,6 @@ npm run zip          # 配布用ZIPを生成
 ## テスト
 
 - **ユニットテスト**: `utils/*.test.ts`（Vitest、nodeenv）
-- **E2Eテスト**: `tests/e2e/`（Playwright、Chromiumのみ、1280x720）
 
 ## 作業フロー
 

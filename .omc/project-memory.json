@@ -1,0 +1,176 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1776484715656,
+  "projectRoot": "/Users/user/claude/chrome-extention-base",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "react",
+        "version": "19.2.3",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.3",
+        "category": "frontend"
+      },
+      {
+        "name": "@playwright/test",
+        "version": "1.58.0",
+        "category": "testing"
+      },
+      {
+        "name": "vitest",
+        "version": "4.0.18",
+        "category": "testing"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": "npm test",
+    "lintCommand": "npm run lint",
+    "devCommand": "npm run dev",
+    "scripts": {
+      "dev": "wxt",
+      "dev:firefox": "wxt -b firefox",
+      "build": "wxt build",
+      "build:firefox": "wxt build -b firefox",
+      "zip": "wxt zip",
+      "zip:firefox": "wxt zip -b firefox",
+      "knip": "knip",
+      "lint": "oxlint .",
+      "lint:fix": "oxlint --fix .",
+      "format": "oxfmt .",
+      "format:check": "oxfmt --check .",
+      "compile": "tsc --noEmit",
+      "test": "vitest run",
+      "test:watch": "vitest",
+      "test:e2e": "playwright test",
+      "postinstall": "wxt prepare"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "assets",
+      "docs",
+      "public",
+      "tests"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "assets": {
+      "path": "assets",
+      "purpose": "Static assets",
+      "fileCount": 1,
+      "lastAccessed": 1776484715614,
+      "keyFiles": [
+        "package-lock.json"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 0,
+      "lastAccessed": 1776484715618,
+      "keyFiles": []
+    },
+    "entrypoints": {
+      "path": "entrypoints",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1776484715626,
+      "keyFiles": [
+        "background.ts",
+        "content.ts"
+      ]
+    },
+    "old": {
+      "path": "old",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1776484715628,
+      "keyFiles": [
+        "SKILL.md"
+      ]
+    },
+    "playwright-report": {
+      "path": "playwright-report",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776484715629,
+      "keyFiles": [
+        "index.html"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 1,
+      "lastAccessed": 1776484715630,
+      "keyFiles": [
+        "wxt.svg"
+      ]
+    },
+    "test-results": {
+      "path": "test-results",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776484715630,
+      "keyFiles": []
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 0,
+      "lastAccessed": 1776484715631,
+      "keyFiles": []
+    },
+    "utils": {
+      "path": "utils",
+      "purpose": "Utility functions",
+      "fileCount": 3,
+      "lastAccessed": 1776484715631,
+      "keyFiles": [
+        "helpers.test.ts",
+        "helpers.ts",
+        "storage.ts"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}

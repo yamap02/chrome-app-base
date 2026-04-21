@@ -1,0 +1,31 @@
+{
+  "eval_id": 2,
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "host_permissions <all_urls> の問題を指摘している",
+      "passed": true,
+      "evidence": "HIGHで指摘している（with_skillはCRITICALとして扱っており重大度の判断が異なる）"
+    },
+    {
+      "text": "web_accessible_resources の <all_urls> + JS公開の問題を指摘している",
+      "passed": true,
+      "evidence": "HIGHでフィンガープリントと情報収集のリスクを指摘している（use_dynamic_url: trueの言及なし）"
+    },
+    {
+      "text": "unsafe-eval の問題を指摘している",
+      "passed": true,
+      "evidence": "CRITICALとして最重大に指摘し、Web Store審査拒否についても言及している"
+    },
+    {
+      "text": "過剰パーミッション（cookies/history/nativeMessaging）を指摘している",
+      "passed": true,
+      "evidence": "MEDIUM~HIGHでcookies/history/tabs/nativeMessagingを指摘している"
+    },
+    {
+      "text": "最小権限への具体的な修正案を提示している",
+      "passed": true,
+      "evidence": "各指摘に対処法を示しているが、「前提不足」セクションや追加確認事項の提示はない"
+    }
+  ]
+}

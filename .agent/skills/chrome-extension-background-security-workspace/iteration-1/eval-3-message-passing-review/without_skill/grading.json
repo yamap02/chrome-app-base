@@ -1,0 +1,26 @@
+{
+  "eval_id": 3,
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "origin検証なしのpostMessage bridgeの問題を指摘している",
+      "passed": true,
+      "evidence": "CRITICALでevent.origin未検証によるOrigin Spoofingを指摘し、修正方針を示している"
+    },
+    {
+      "text": "new Function()による動的コード実行のリスクを指摘している",
+      "passed": true,
+      "evidence": "CRITICALでRCE in extension contextとして最重大指摘し、静的関数への置き換えを推奨している"
+    },
+    {
+      "text": "sender検証なしの問題を指摘している",
+      "passed": true,
+      "evidence": "HIGHの「メッセージ構造の無検証」内でsender.tab未検証に触れている（ただしsender.id検証の独立した指摘はなく、with_skillより弱い）"
+    },
+    {
+      "text": "具体的な修正コード（event.origin検証・固定アクション等）を示している",
+      "passed": true,
+      "evidence": "全指摘に具体的なTypeScriptコードを含む修正例を提示、修正済みコード例も末尾に掲載"
+    }
+  ]
+}

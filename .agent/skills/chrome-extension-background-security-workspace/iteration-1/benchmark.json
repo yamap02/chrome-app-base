@@ -1,0 +1,94 @@
+{
+  "skill_name": "chrome-extension-background-security",
+  "iteration": 1,
+  "configurations": [
+    {
+      "name": "with_skill",
+      "evals": [
+        {
+          "eval_id": 1,
+          "eval_name": "eval-1-background-ts-review",
+          "pass_rate": 1.0,
+          "assertions_passed": 5,
+          "assertions_total": 5,
+          "duration_ms": 75480,
+          "total_tokens": 27369
+        },
+        {
+          "eval_id": 2,
+          "eval_name": "eval-2-manifest-review",
+          "pass_rate": 1.0,
+          "assertions_passed": 5,
+          "assertions_total": 5,
+          "duration_ms": 69394,
+          "total_tokens": 27202
+        },
+        {
+          "eval_id": 3,
+          "eval_name": "eval-3-message-passing-review",
+          "pass_rate": 1.0,
+          "assertions_passed": 4,
+          "assertions_total": 4,
+          "duration_ms": 95431,
+          "total_tokens": 29132
+        }
+      ],
+      "summary": {
+        "pass_rate_mean": 1.0,
+        "pass_rate_stddev": 0.0,
+        "duration_ms_mean": 80101,
+        "duration_ms_stddev": 13574,
+        "tokens_mean": 27901,
+        "tokens_stddev": 1086
+      }
+    },
+    {
+      "name": "without_skill",
+      "evals": [
+        {
+          "eval_id": 1,
+          "eval_name": "eval-1-background-ts-review",
+          "pass_rate": 1.0,
+          "assertions_passed": 5,
+          "assertions_total": 5,
+          "duration_ms": 52688,
+          "total_tokens": 20387
+        },
+        {
+          "eval_id": 2,
+          "eval_name": "eval-2-manifest-review",
+          "pass_rate": 1.0,
+          "assertions_passed": 5,
+          "assertions_total": 5,
+          "duration_ms": 46181,
+          "total_tokens": 19359
+        },
+        {
+          "eval_id": 3,
+          "eval_name": "eval-3-message-passing-review",
+          "pass_rate": 1.0,
+          "assertions_passed": 4,
+          "assertions_total": 4,
+          "duration_ms": 47740,
+          "total_tokens": 19733
+        }
+      ],
+      "summary": {
+        "pass_rate_mean": 1.0,
+        "pass_rate_stddev": 0.0,
+        "duration_ms_mean": 48869,
+        "duration_ms_stddev": 3366,
+        "tokens_mean": 19826,
+        "tokens_stddev": 514
+      }
+    }
+  ],
+  "analyst_observations": [
+    "アサーション通過率は with_skill / without_skill 両方とも 100% — 全指摘はベースラインでも検出可能な問題だった",
+    "with_skill は Chrome固有の文脈（web_accessible_resources フィンガープリント攻撃、use_dynamic_url、バックエンドProxy設計、bridge パターン廃止推奨）を追加でカバーしている",
+    "with_skill は「対象 → 重大指摘 → 中程度指摘 → 前提不足 → 是正優先順」の構造化出力テンプレートを一貫して使用しており、レビュー品質が安定している",
+    "host_permissions <all_urls> の重大度: with_skill は CRITICAL / without_skill は HIGH — スキルがより保守的かつ正確な重大度判定をしている",
+    "with_skill のトークン消費は without_skill より約40%多い（27,901 vs 19,826 平均）— チェックリスト参照コストが発生している",
+    "without_skill でも主要な4脆弱性は検出されており、アサーション設計がベースラインを区別できていない可能性あり — より高難度のアサーション（Chrome固有観点）を次回追加するとよい"
+  ]
+}

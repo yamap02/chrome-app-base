@@ -1,0 +1,31 @@
+{
+  "eval_id": 1,
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "sender検証なしの問題を指摘している",
+      "passed": true,
+      "evidence": "CRIT-1で sender.id / sender.origin の検証なしを重大指摘として挙げ、悪用経路・推奨対策付きで説明している"
+    },
+    {
+      "text": "任意URL fetchのSSRF的悪用リスクを指摘している",
+      "passed": true,
+      "evidence": "CRIT-2で localhost・内部APIへの横断アクセスを含むSSRF的悪用を明示し、allowlist + https強制の対策を示している"
+    },
+    {
+      "text": "APIキー平文storage保存の問題を指摘している",
+      "passed": true,
+      "evidence": "CRIT-3でchrome.storage.localがDevToolsから誰でも読める点を明示し、バックエンドProxy設計への切り替えを推奨している"
+    },
+    {
+      "text": "エラースタックトレース漏洩の問題を指摘している",
+      "passed": true,
+      "evidence": "MED-1でerr.stackをsendResponseに含めると内部構造が露出すると指摘、内部ログのみに限定する対策を示している"
+    },
+    {
+      "text": "各指摘に推奨対策を示している",
+      "passed": true,
+      "evidence": "全指摘に具体的なコード例付きの推奨対策があり、最低限・リリース前・運用の3段階で是正順も提示"
+    }
+  ]
+}

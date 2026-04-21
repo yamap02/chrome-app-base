@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "eval_name": "eval-2-manifest-review",
+  "prompt": "manifest.jsonを確認してセキュリティ問題を指摘してください:\n\n```json\n{\n  \"manifest_version\": 3,\n  \"name\": \"My Extension\",\n  \"version\": \"1.0.0\",\n  \"permissions\": [\"tabs\", \"storage\", \"cookies\", \"history\", \"nativeMessaging\"],\n  \"host_permissions\": [\"<all_urls>\"],\n  \"web_accessible_resources\": [\n    {\n      \"resources\": [\"*.js\", \"*.css\", \"*.html\"],\n      \"matches\": [\"<all_urls>\"]\n    }\n  ],\n  \"content_security_policy\": {\n    \"extension_pages\": \"script-src 'self' 'unsafe-eval'; object-src 'self'\"\n  }\n}\n```",
+  "assertions": [
+    { "id": "b1", "description": "host_permissions <all_urls> の問題を指摘している" },
+    { "id": "b2", "description": "web_accessible_resources の <all_urls> + JS公開の問題を指摘している" },
+    { "id": "b3", "description": "unsafe-eval の問題を指摘している" },
+    { "id": "b4", "description": "過剰パーミッション（cookies/history/nativeMessaging）を指摘している" },
+    { "id": "b5", "description": "最小権限への具体的な修正案を提示している" }
+  ]
+}

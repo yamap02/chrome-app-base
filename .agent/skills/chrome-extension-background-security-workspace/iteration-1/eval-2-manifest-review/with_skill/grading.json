@@ -1,0 +1,31 @@
+{
+  "eval_id": 2,
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "host_permissions <all_urls> の問題を指摘している",
+      "passed": true,
+      "evidence": "CRITICAL-1でhost_permissions <all_urls>を最重大として指摘し、サプライチェーン攻撃シナリオも含む悪用経路を示している"
+    },
+    {
+      "text": "web_accessible_resources の <all_urls> + JS公開の問題を指摘している",
+      "passed": true,
+      "evidence": "CRITICAL-2でフィンガープリント攻撃・外部スクリプト読み込みリスクを明示し、use_dynamic_url: trueの推奨も含む詳細な対策を示している"
+    },
+    {
+      "text": "unsafe-eval の問題を指摘している",
+      "passed": true,
+      "evidence": "CRITICAL-3でunsafe-evalによる任意コード実行リスクとcookies/history/nativeMessagingとの組み合わせ危険性を説明している"
+    },
+    {
+      "text": "過剰パーミッション（cookies/history/nativeMessaging）を指摘している",
+      "passed": true,
+      "evidence": "HIGH-1でnativeMessaging、HIGH-2でcookies+historyの組み合わせリスク、HIGH-3でtabs→activeTab代替を指摘している"
+    },
+    {
+      "text": "最小権限への具体的な修正案を提示している",
+      "passed": true,
+      "evidence": "5段階の是正優先順で具体的な修正手順を提示し、各指摘に対して削除・代替・制限の具体的な対策を示している"
+    }
+  ]
+}

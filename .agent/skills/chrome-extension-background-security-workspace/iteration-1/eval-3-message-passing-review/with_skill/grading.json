@@ -1,0 +1,26 @@
+{
+  "eval_id": 3,
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "origin検証なしのpostMessage bridgeの問題を指摘している",
+      "passed": true,
+      "evidence": "CRITICAL-1でウェブページ→Content Script→Service Workerのエスカレーション経路を明示し、bridge パターン自体の廃止も推奨している"
+    },
+    {
+      "text": "new Function()による動的コード実行のリスクを指摘している",
+      "passed": true,
+      "evidence": "CRITICAL-2でnew Function(msg.code)がRCE相当であること、MV3のCSP違反であることを指摘し、allowlist方式への置き換えコードを示している"
+    },
+    {
+      "text": "sender検証なしの問題を指摘している",
+      "passed": true,
+      "evidence": "CRITICAL-3でsender.id検証の欠如を指摘し、chrome.runtime.idとの照合コードを示している"
+    },
+    {
+      "text": "具体的な修正コード（event.origin検証・固定アクション等）を示している",
+      "passed": true,
+      "evidence": "全指摘に具体的なTypeScriptコードを含む修正例を提示し、ALLOWED_ACTIONS定数によるallowlist方式も示している"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "eval-1-background-ts-review",
+  "prompt": "このbackground.tsのセキュリティをレビューしてください:\n\n```typescript\n// background.ts\nchrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {\n  if (msg.action === 'fetchData') {\n    fetch(msg.url)\n      .then(res => res.json())\n      .then(data => sendResponse({ data }))\n      .catch(err => sendResponse({ error: err.message, stack: err.stack }));\n    return true;\n  }\n  if (msg.action === 'saveApiKey') {\n    chrome.storage.local.set({ apiKey: msg.key });\n    sendResponse({ ok: true });\n  }\n});\n```",
+  "assertions": [
+    { "id": "a1", "description": "sender検証なしの問題を指摘している" },
+    { "id": "a2", "description": "任意URL fetchのSSRF的悪用リスクを指摘している" },
+    { "id": "a3", "description": "APIキー平文storage保存の問題を指摘している" },
+    { "id": "a4", "description": "エラースタックトレース漏洩の問題を指摘している" },
+    { "id": "a5", "description": "各指摘に推奨対策を示している" }
+  ]
+}

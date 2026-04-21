@@ -1,20 +1,24 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1776484715656,
-  "projectRoot": "/Users/user/claude/chrome-extention-base",
+  "lastScanned": 1776799949004,
+  "projectRoot": "/Users/user/ai-dev/chrome-extention-base",
   "techStack": {
     "languages": [
       {
         "name": "JavaScript/TypeScript",
         "version": null,
         "confidence": "high",
-        "markers": ["package.json"]
+        "markers": [
+          "package.json"
+        ]
       },
       {
         "name": "TypeScript",
         "version": null,
         "confidence": "high",
-        "markers": ["tsconfig.json"]
+        "markers": [
+          "tsconfig.json"
+        ]
       }
     ],
     "frameworks": [
@@ -27,11 +31,6 @@
         "name": "react-dom",
         "version": "19.2.3",
         "category": "frontend"
-      },
-      {
-        "name": "@playwright/test",
-        "version": "1.58.0",
-        "category": "testing"
       },
       {
         "name": "vitest",
@@ -62,7 +61,6 @@
       "compile": "tsc --noEmit",
       "test": "vitest run",
       "test:watch": "vitest",
-      "test:e2e": "playwright test",
       "postinstall": "wxt prepare"
     }
   },
@@ -75,7 +73,10 @@
   "structure": {
     "isMonorepo": false,
     "workspaces": [],
-    "mainDirectories": ["assets", "docs", "public", "tests"],
+    "mainDirectories": [
+      "public",
+      "tests"
+    ],
     "gitBranches": {
       "defaultBranch": "main",
       "branchingStrategy": null
@@ -83,70 +84,268 @@
   },
   "customNotes": [],
   "directoryMap": {
-    "assets": {
-      "path": "assets",
-      "purpose": "Static assets",
-      "fileCount": 1,
-      "lastAccessed": 1776484715614,
-      "keyFiles": ["package-lock.json"]
-    },
-    "docs": {
-      "path": "docs",
-      "purpose": "Documentation",
-      "fileCount": 0,
-      "lastAccessed": 1776484715618,
-      "keyFiles": []
-    },
     "entrypoints": {
       "path": "entrypoints",
       "purpose": null,
       "fileCount": 2,
-      "lastAccessed": 1776484715626,
-      "keyFiles": ["background.ts", "content.ts"]
-    },
-    "old": {
-      "path": "old",
-      "purpose": null,
-      "fileCount": 2,
-      "lastAccessed": 1776484715628,
-      "keyFiles": ["SKILL.md"]
-    },
-    "playwright-report": {
-      "path": "playwright-report",
-      "purpose": null,
-      "fileCount": 1,
-      "lastAccessed": 1776484715629,
-      "keyFiles": ["index.html"]
+      "lastAccessed": 1776799948984,
+      "keyFiles": [
+        "background.ts",
+        "content.ts"
+      ]
     },
     "public": {
       "path": "public",
       "purpose": "Public files",
       "fileCount": 1,
-      "lastAccessed": 1776484715630,
-      "keyFiles": ["wxt.svg"]
-    },
-    "test-results": {
-      "path": "test-results",
-      "purpose": null,
-      "fileCount": 1,
-      "lastAccessed": 1776484715630,
-      "keyFiles": []
+      "lastAccessed": 1776799948985,
+      "keyFiles": [
+        "wxt.svg"
+      ]
     },
     "tests": {
       "path": "tests",
       "purpose": "Test files",
       "fileCount": 0,
-      "lastAccessed": 1776484715631,
+      "lastAccessed": 1776799948990,
       "keyFiles": []
     },
     "utils": {
       "path": "utils",
       "purpose": "Utility functions",
-      "fileCount": 3,
-      "lastAccessed": 1776484715631,
-      "keyFiles": ["helpers.test.ts", "helpers.ts", "storage.ts"]
+      "fileCount": 4,
+      "lastAccessed": 1776799948990,
+      "keyFiles": [
+        "logger.ts",
+        "settings.test.ts",
+        "settings.ts",
+        "storage.ts"
+      ]
     }
   },
-  "hotPaths": [],
+  "hotPaths": [
+    {
+      "path": ".agent/skills/chrome-extension-background-security/SKILL.md",
+      "accessCount": 4,
+      "lastAccessed": 1776803566815,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security/references/security-checklist.md",
+      "accessCount": 4,
+      "lastAccessed": 1776803571197,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-performance/SKILL.md",
+      "accessCount": 2,
+      "lastAccessed": 1776803353174,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-1-background-ts-review/with_skill/outputs/review.md",
+      "accessCount": 2,
+      "lastAccessed": 1776803669238,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-1-background-ts-review/without_skill/outputs/review.md",
+      "accessCount": 2,
+      "lastAccessed": 1776803669303,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-2-manifest-review/with_skill/outputs/review.md",
+      "accessCount": 2,
+      "lastAccessed": 1776803685058,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-2-manifest-review/without_skill/outputs/review.md",
+      "accessCount": 2,
+      "lastAccessed": 1776803685363,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-3-message-passing-review/with_skill/outputs/review.md",
+      "accessCount": 2,
+      "lastAccessed": 1776803685779,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-3-message-passing-review/without_skill/outputs/review.md",
+      "accessCount": 2,
+      "lastAccessed": 1776803685827,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/gas-performance/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1776799994110,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/gas-performance/references/anti-patterns.md",
+      "accessCount": 1,
+      "lastAccessed": 1776799994894,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/gas-performance/references/architecture.md",
+      "accessCount": 1,
+      "lastAccessed": 1776799995050,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/gas-performance/references/checklist.md",
+      "accessCount": 1,
+      "lastAccessed": 1776800001407,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/gas-performance/references/patterns.md",
+      "accessCount": 1,
+      "lastAccessed": 1776800001663,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-performance/references/anti-patterns.md",
+      "accessCount": 1,
+      "lastAccessed": 1776800137683,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-performance/references/patterns.md",
+      "accessCount": 1,
+      "lastAccessed": 1776800194449,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-performance/references/checklist.md",
+      "accessCount": 1,
+      "lastAccessed": 1776800240823,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-performance/references/architecture.md",
+      "accessCount": 1,
+      "lastAccessed": 1776800297090,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/frontend-security/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1776803352789,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security/evals/evals.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803513694,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-1-background-ts-review/eval_metadata.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803538279,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-2-manifest-review/eval_metadata.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803539790,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-3-message-passing-review/eval_metadata.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803543583,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 1,
+      "lastAccessed": 1776803577848,
+      "type": "directory"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-2-manifest-review/without_skill/timing.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803613163,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-1-background-ts-review/without_skill/timing.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803619915,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-3-message-passing-review/without_skill/timing.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803620882,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-2-manifest-review/with_skill/timing.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803632040,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-1-background-ts-review/with_skill/timing.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803636183,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-3-message-passing-review/with_skill/timing.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803664417,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-1-background-ts-review/with_skill/grading.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803720186,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-1-background-ts-review/without_skill/grading.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803725567,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-2-manifest-review/with_skill/grading.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803732752,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-2-manifest-review/without_skill/grading.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803735900,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-3-message-passing-review/with_skill/grading.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803741254,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/eval-3-message-passing-review/without_skill/grading.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803745816,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/chrome-extension-background-security-workspace/iteration-1/benchmark.json",
+      "accessCount": 1,
+      "lastAccessed": 1776803767655,
+      "type": "file"
+    }
+  ],
   "userDirectives": []
 }

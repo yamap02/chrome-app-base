@@ -1,0 +1,31 @@
+{
+  "eval_id": 1,
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "sender検証なしの問題を指摘している",
+      "passed": true,
+      "evidence": "CRITICAL 1でsender.id未検証を指摘し修正方針を示している"
+    },
+    {
+      "text": "任意URL fetchのSSRF的悪用リスクを指摘している",
+      "passed": true,
+      "evidence": "CRITICAL 2でURL無検証fetchをSSRFと明示し、allowlistによる修正方針を示している"
+    },
+    {
+      "text": "APIキー平文storage保存の問題を指摘している",
+      "passed": true,
+      "evidence": "HIGH 4でchrome.storage.localへの平文保存リスクに言及している（ただし「入力検証なし」がメインの指摘であり、バックエンドProxy設計への言及はない）"
+    },
+    {
+      "text": "エラースタックトレース漏洩の問題を指摘している",
+      "passed": true,
+      "evidence": "HIGH 3でerr.stackの漏洩を指摘し、汎用メッセージへの変更を推奨している"
+    },
+    {
+      "text": "各指摘に推奨対策を示している",
+      "passed": true,
+      "evidence": "全指摘に修正方針とコード例を提示している"
+    }
+  ]
+}

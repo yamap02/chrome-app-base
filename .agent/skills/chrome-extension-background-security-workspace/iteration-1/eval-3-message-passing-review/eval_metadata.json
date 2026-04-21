@@ -1,0 +1,11 @@
+{
+  "eval_id": 3,
+  "eval_name": "eval-3-message-passing-review",
+  "prompt": "Content ScriptとService Worker間のメッセージパッシングコードをレビューしてください:\n\n```typescript\n// content.ts\nwindow.addEventListener('message', (event) => {\n  // ページからのメッセージをそのままService Workerへ転送\n  chrome.runtime.sendMessage(event.data);\n});\n\n// background.ts\nchrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {\n  if (msg.type === 'DOM_INJECT') {\n    chrome.scripting.executeScript({\n      target: { tabId: sender.tab.id },\n      func: new Function(msg.code)  // 動的コード実行\n    });\n  }\n});\n```",
+  "assertions": [
+    { "id": "c1", "description": "origin検証なしのpostMessage bridgeの問題を指摘している" },
+    { "id": "c2", "description": "new Function()による動的コード実行のリスクを指摘している" },
+    { "id": "c3", "description": "sender検証なしの問題を指摘している" },
+    { "id": "c4", "description": "具体的な修正コード（event.origin検証・固定アクション等）を示している" }
+  ]
+}

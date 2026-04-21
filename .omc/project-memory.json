@@ -8,17 +8,13 @@
         "name": "JavaScript/TypeScript",
         "version": null,
         "confidence": "high",
-        "markers": [
-          "package.json"
-        ]
+        "markers": ["package.json"]
       },
       {
         "name": "TypeScript",
         "version": null,
         "confidence": "high",
-        "markers": [
-          "tsconfig.json"
-        ]
+        "markers": ["tsconfig.json"]
       }
     ],
     "frameworks": [
@@ -79,12 +75,7 @@
   "structure": {
     "isMonorepo": false,
     "workspaces": [],
-    "mainDirectories": [
-      "assets",
-      "docs",
-      "public",
-      "tests"
-    ],
+    "mainDirectories": ["assets", "docs", "public", "tests"],
     "gitBranches": {
       "defaultBranch": "main",
       "branchingStrategy": null
@@ -97,9 +88,7 @@
       "purpose": "Static assets",
       "fileCount": 1,
       "lastAccessed": 1776484715614,
-      "keyFiles": [
-        "package-lock.json"
-      ]
+      "keyFiles": ["package-lock.json"]
     },
     "docs": {
       "path": "docs",
@@ -113,37 +102,28 @@
       "purpose": null,
       "fileCount": 2,
       "lastAccessed": 1776484715626,
-      "keyFiles": [
-        "background.ts",
-        "content.ts"
-      ]
+      "keyFiles": ["background.ts", "content.ts"]
     },
     "old": {
       "path": "old",
       "purpose": null,
       "fileCount": 2,
       "lastAccessed": 1776484715628,
-      "keyFiles": [
-        "SKILL.md"
-      ]
+      "keyFiles": ["SKILL.md"]
     },
     "playwright-report": {
       "path": "playwright-report",
       "purpose": null,
       "fileCount": 1,
       "lastAccessed": 1776484715629,
-      "keyFiles": [
-        "index.html"
-      ]
+      "keyFiles": ["index.html"]
     },
     "public": {
       "path": "public",
       "purpose": "Public files",
       "fileCount": 1,
       "lastAccessed": 1776484715630,
-      "keyFiles": [
-        "wxt.svg"
-      ]
+      "keyFiles": ["wxt.svg"]
     },
     "test-results": {
       "path": "test-results",
@@ -164,11 +144,7 @@
       "purpose": "Utility functions",
       "fileCount": 3,
       "lastAccessed": 1776484715631,
-      "keyFiles": [
-        "helpers.test.ts",
-        "helpers.ts",
-        "storage.ts"
-      ]
+      "keyFiles": ["helpers.test.ts", "helpers.ts", "storage.ts"]
     }
   },
   "hotPaths": [],

@@ -24,6 +24,7 @@ npm create wxt@latest -- --template vanilla-ts
 ```
 
 ### 推奨スタック（2025年）
+
 - **React + Tailwind + shadcn/ui** — UIが複雑な拡張機能
 - **Vue 3** — 軽量でリアクティブなUI
 - **Svelte** — バンドルサイズを最小化したい場合
@@ -62,19 +63,19 @@ my-extension/
 
 ```typescript
 // wxt.config.ts
-import { defineConfig } from 'wxt';
+import { defineConfig } from "wxt";
 
 export default defineConfig({
   // UIフレームワークモジュール
-  modules: ['@wxt-dev/module-react'],  // or vue / svelte
+  modules: ["@wxt-dev/module-react"], // or vue / svelte
 
   manifest: {
-    name: 'My Extension',
-    description: '説明文',
-    version: '1.0.0',
+    name: "My Extension",
+    description: "説明文",
+    version: "1.0.0",
     // 必要最小限のパーミッションだけ宣言する（審査・セキュリティ上重要）
-    permissions: ['activeTab', 'storage'],
-    host_permissions: ['https://example.com/*'],
+    permissions: ["activeTab", "storage"],
+    host_permissions: ["https://example.com/*"],
   },
 
   // 開発時の設定
@@ -87,6 +88,7 @@ export default defineConfig({
 ```
 
 ### パーミッション最小化の原則
+
 - `<all_urls>` や `*://*/*` は避け、必要なドメインのみ指定
 - `tabs` パーミッションは `activeTab` で代替できることが多い
 - `scripting` は `executeScript` を使う場合のみ
@@ -100,19 +102,19 @@ export default defineConfig({
 ```typescript
 // entrypoints/background.ts
 export default defineBackground({
-  type: 'module',
+  type: "module",
   persistent: false, // MV3ではfalseが基本
   main() {
     // ✅ リスナーはトップレベルで同期的に登録（非同期にしない）
     browser.runtime.onInstalled.addListener(({ reason }) => {
-      if (reason === 'install') {
-        console.log('拡張機能がインストールされました');
+      if (reason === "install") {
+        console.log("拡張機能がインストールされました");
       }
     });
 
     // メッセージハンドラ
     browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
-      if (message.type === 'FETCH_DATA') {
+      if (message.type === "FETCH_DATA") {
         // 非同期処理する場合は必ず true を返す
         handleFetchData(message.payload).then(sendResponse);
         return true;
@@ -123,11 +125,12 @@ export default defineBackground({
 
 async function handleFetchData(payload: unknown) {
   // APIコールなど重い処理はここで
-  return { result: 'ok' };
+  return { result: "ok" };
 }
 ```
 
 **⚠️ Service Worker の注意点（MV3）：**
+
 - Service Workerは非アクティブ時に終了する（persistent backgroundページは使えない）
 - `chrome.alarms` API でキープアライブを実装する場合は `alarms` パーミッションが必要
 - 長時間処理が必要な場合は Offscreen Document を検討
@@ -137,9 +140,9 @@ async function handleFetchData(payload: unknown) {
 ```typescript
 // entrypoints/content.ts
 export default defineContentScript({
-  matches: ['https://example.com/*'],
+  matches: ["https://example.com/*"],
   // CSSをShadow DOMで分離する場合
-  cssInjectionMode: 'ui',
+  cssInjectionMode: "ui",
 
   async main(ctx) {
     // ctx はコンテキスト無効化を検知するオブジェクト
@@ -147,11 +150,11 @@ export default defineContentScript({
 
     // UIをShadow DOMで作成（ページのCSSと干渉しない）
     const ui = await createShadowRootUi(ctx, {
-      name: 'my-extension-ui',
-      position: 'inline',
-      anchor: 'body',
+      name: "my-extension-ui",
+      position: "inline",
+      anchor: "body",
       onMount(container) {
-        const root = document.createElement('div');
+        const root = document.createElement("div");
         container.append(root);
         // ReactなどでマウントするならここでcreateRoot(root).render(...)
       },
@@ -168,6 +171,7 @@ export default defineContentScript({
 ```
 
 **ShadowRoot UIを使う理由：**
+
 - コンテントスクリプトのCSSがページに漏れない
 - ページのCSSがUI側に影響しない
 - `isolateEvents` オプションでイベント伝播も制御可能
@@ -176,28 +180,25 @@ export default defineContentScript({
 
 ```tsx
 // entrypoints/popup/App.tsx (React例)
-import { useState, useEffect } from 'react';
-import { storage } from 'wxt/storage';
+import { useState, useEffect } from "react";
+import { storage } from "wxt/storage";
 
 export default function App() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    storage.getItem<boolean>('local:enabled', { fallback: false })
-      .then(setEnabled);
+    storage.getItem<boolean>("local:enabled", { fallback: false }).then(setEnabled);
   }, []);
 
   const toggle = async () => {
     const next = !enabled;
     setEnabled(next);
-    await storage.setItem('local:enabled', next);
+    await storage.setItem("local:enabled", next);
   };
 
   return (
     <div className="p-4 w-64">
-      <button onClick={toggle}>
-        {enabled ? '無効にする' : '有効にする'}
-      </button>
+      <button onClick={toggle}>{enabled ? "無効にする" : "有効にする"}</button>
     </div>
   );
 }
@@ -212,17 +213,17 @@ WXTのストレージAPIは `wxt/storage` からインポートする（`chrome.
 ### 基本パターン
 
 ```typescript
-import { storage } from 'wxt/storage';
+import { storage } from "wxt/storage";
 
 // ストレージエリアをキーのプレフィックスで指定（必須）
 // local: / session: / sync: / managed:
-await storage.getItem<boolean>('local:enabled', { fallback: false });
-await storage.setItem('local:enabled', true);
-await storage.removeItem('local:enabled');
+await storage.getItem<boolean>("local:enabled", { fallback: false });
+await storage.setItem("local:enabled", true);
+await storage.removeItem("local:enabled");
 
 // 変更を監視
-const unwatch = storage.watch<boolean>('local:enabled', (newVal, oldVal) => {
-  console.log('変更:', newVal);
+const unwatch = storage.watch<boolean>("local:enabled", (newVal, oldVal) => {
+  console.log("変更:", newVal);
 });
 // クリーンアップ時に呼ぶ
 unwatch();
@@ -232,29 +233,26 @@ unwatch();
 
 ```typescript
 // utils/storage.ts
-import { storage } from 'wxt/storage';
+import { storage } from "wxt/storage";
 
 // 型・デフォルト値・バージョンをまとめて定義
-export const enabledItem = storage.defineItem<boolean>('local:enabled', {
+export const enabledItem = storage.defineItem<boolean>("local:enabled", {
   fallback: false,
 });
 
-export const settingsItem = storage.defineItem<{ theme: string; lang: string }>(
-  'sync:settings',
-  {
-    fallback: { theme: 'light', lang: 'ja' },
-    version: 1,
-    // バージョンアップ時のマイグレーション
-    migrations: {
-      2: (old) => ({ ...old, lang: old.lang ?? 'ja' }),
-    },
-  }
-);
+export const settingsItem = storage.defineItem<{ theme: string; lang: string }>("sync:settings", {
+  fallback: { theme: "light", lang: "ja" },
+  version: 1,
+  // バージョンアップ時のマイグレーション
+  migrations: {
+    2: (old) => ({ ...old, lang: old.lang ?? "ja" }),
+  },
+});
 ```
 
 ```typescript
 // 利用側
-import { enabledItem, settingsItem } from '@/utils/storage';
+import { enabledItem, settingsItem } from "@/utils/storage";
 
 const enabled = await enabledItem.getValue();
 await enabledItem.setValue(true);
@@ -272,27 +270,27 @@ const unwatch = enabledItem.watch((val) => console.log(val));
 
 // メッセージの型定義を一元管理
 export type ExtensionMessage =
-  | { type: 'GET_TAB_INFO'; payload: { tabId: number } }
-  | { type: 'SCRAPE_PAGE' }
-  | { type: 'UPDATE_BADGE'; payload: { count: number } };
+  | { type: "GET_TAB_INFO"; payload: { tabId: number } }
+  | { type: "SCRAPE_PAGE" }
+  | { type: "UPDATE_BADGE"; payload: { count: number } };
 
 export type ExtensionResponse =
-  | { type: 'GET_TAB_INFO'; data: { url: string; title: string } }
-  | { type: 'SCRAPE_PAGE'; data: string[] }
-  | { type: 'UPDATE_BADGE'; success: boolean };
+  | { type: "GET_TAB_INFO"; data: { url: string; title: string } }
+  | { type: "SCRAPE_PAGE"; data: string[] }
+  | { type: "UPDATE_BADGE"; success: boolean };
 
 // 型付き送信ヘルパー
 export async function sendToBackground<T extends ExtensionMessage>(
-  message: T
-): Promise<Extract<ExtensionResponse, { type: T['type'] }>> {
+  message: T,
+): Promise<Extract<ExtensionResponse, { type: T["type"] }>> {
   return browser.runtime.sendMessage(message);
 }
 
 // コンテントスクリプトへ送信
 export async function sendToTab<T extends ExtensionMessage>(
   tabId: number,
-  message: T
-): Promise<Extract<ExtensionResponse, { type: T['type'] }>> {
+  message: T,
+): Promise<Extract<ExtensionResponse, { type: T["type"] }>> {
   return browser.tabs.sendMessage(tabId, message);
 }
 ```
@@ -301,13 +299,13 @@ export async function sendToTab<T extends ExtensionMessage>(
 // entrypoints/background.ts 内のハンドラ
 browser.runtime.onMessage.addListener((message: ExtensionMessage, sender, sendResponse) => {
   switch (message.type) {
-    case 'GET_TAB_INFO':
+    case "GET_TAB_INFO":
       getTabInfo(message.payload.tabId).then(sendResponse);
       return true; // 非同期応答のためtrueを返す
 
-    case 'UPDATE_BADGE':
+    case "UPDATE_BADGE":
       browser.action.setBadgeText({ text: String(message.payload.count) });
-      sendResponse({ type: 'UPDATE_BADGE', success: true });
+      sendResponse({ type: "UPDATE_BADGE", success: true });
       break;
   }
 });
@@ -327,17 +325,17 @@ export default defineUnlistedScript(() => {
 
   // Content Scriptへの返信はCustomEventで
   document.currentScript?.dispatchEvent(
-    new CustomEvent('injected-response', { detail: { data: 'ok' } })
+    new CustomEvent("injected-response", { detail: { data: "ok" } }),
   );
 });
 ```
 
 ```typescript
 // entrypoints/content.ts 内
-const { script } = await injectScript('/injected-script.js', {
+const { script } = await injectScript("/injected-script.js", {
   keepInDom: true,
   modifyScript(el) {
-    el.addEventListener('injected-response', (e) => {
+    el.addEventListener("injected-response", (e) => {
       if (e instanceof CustomEvent) console.log(e.detail);
     });
   },
@@ -368,12 +366,14 @@ npm run zip:firefox
 ```
 
 ### バンドルサイズの最適化
+
 - `wxt analyze` でバンドル内容を可視化
 - コンテントスクリプトは軽量に保つ（重い処理はBackground Workerへ委譲）
 - 動的インポート `import()` でコード分割を活用
 - 画像は `public/` に置いてBase64埋め込みを避ける
 
 ### Chrome Web Store 提出チェックリスト
+
 - [ ] `wxt.config.ts` の `manifest.version` を更新
 - [ ] パーミッションが最小化されている
 - [ ] `npm run zip` でZIPを生成
@@ -384,15 +384,15 @@ npm run zip:firefox
 
 ## 9. よくある落とし穴とTIPS
 
-| 問題 | 解決策 |
-|------|--------|
-| Service Workerが突然終了する | `alarms` APIでキープアライブ、または処理をイベント駆動に設計し直す |
-| Content ScriptのCSSがページに干渉 | `createShadowRootUi` を使ってShadow DOMで分離 |
+| 問題                                   | 解決策                                                                |
+| -------------------------------------- | --------------------------------------------------------------------- |
+| Service Workerが突然終了する           | `alarms` APIでキープアライブ、または処理をイベント駆動に設計し直す    |
+| Content ScriptのCSSがページに干渉      | `createShadowRootUi` を使ってShadow DOMで分離                         |
 | `Extension context invalidated` エラー | `ctx.setTimeout` / `ctx.setInterval` を使い、コンテキスト無効化を検知 |
-| `storage.getItem` でキーが見つからない | キーには必ず `local:` などのプレフィックスをつける |
-| 非同期メッセージへの返信が届かない | リスナーで `return true` を返す（チャネルを開いたままにする） |
-| popup閉じるとstateが消える | 永続データはStorage、セッションデータはBackground Worker経由で管理 |
-| Docker内でdevサーバーが即終了 | `wxt.config.ts` に `dev: { server: { open: false } }` を設定 |
+| `storage.getItem` でキーが見つからない | キーには必ず `local:` などのプレフィックスをつける                    |
+| 非同期メッセージへの返信が届かない     | リスナーで `return true` を返す（チャネルを開いたままにする）         |
+| popup閉じるとstateが消える             | 永続データはStorage、セッションデータはBackground Worker経由で管理    |
+| Docker内でdevサーバーが即終了          | `wxt.config.ts` に `dev: { server: { open: false } }` を設定          |
 
 ---
 

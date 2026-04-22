@@ -4,17 +4,38 @@
     {
       "id": 1,
       "prompt": "このbackground.tsのセキュリティをレビューしてください:\n\n```typescript\n// background.ts\nchrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {\n  if (msg.action === 'fetchData') {\n    fetch(msg.url)\n      .then(res => res.json())\n      .then(data => sendResponse({ data }))\n      .catch(err => sendResponse({ error: err.message, stack: err.stack }));\n    return true;\n  }\n  if (msg.action === 'saveApiKey') {\n    chrome.storage.local.set({ apiKey: msg.key });\n    sendResponse({ ok: true });\n  }\n});\n```",
-      "expected_output": "sender検証なし・任意URL fetch（SSRF的悪用）・APIキー平文storage保存・エラースタックトレース漏洩 の4点を重大・中程度指摘として挙げ、それぞれ悪用経路と推奨対策を示す"
+      "checklist": [
+        "[critical] sender 検証欠如を指摘する",
+        "[critical] 任意 URL fetch による SSRF 的悪用リスクを指摘する",
+        "[critical] API キー平文 storage 保存を指摘する",
+        "エラースタック返却による情報漏洩を指摘する",
+        "各指摘に 重大度 悪用経路 影響 推奨対策 根拠コード/設定 を付ける",
+        "事実 前提 推定 を分離する"
+      ]
     },
     {
       "id": 2,
       "prompt": "manifest.jsonを確認してセキュリティ問題を指摘してください:\n\n```json\n{\n  \"manifest_version\": 3,\n  \"name\": \"My Extension\",\n  \"version\": \"1.0.0\",\n  \"permissions\": [\"tabs\", \"storage\", \"cookies\", \"history\", \"nativeMessaging\"],\n  \"host_permissions\": [\"<all_urls>\"],\n  \"web_accessible_resources\": [\n    {\n      \"resources\": [\"*.js\", \"*.css\", \"*.html\"],\n      \"matches\": [\"<all_urls>\"]\n    }\n  ],\n  \"content_security_policy\": {\n    \"extension_pages\": \"script-src 'self' 'unsafe-eval'; object-src 'self'\"\n  }\n}\n```",
-      "expected_output": "host_permissions <all_urls>・web_accessible_resources に <all_urls> + JS公開・unsafe-eval 許可・過剰な permissions（cookies/history/nativeMessaging）の問題を指摘し、最小権限への修正案を提示する"
+      "checklist": [
+        "[critical] host_permissions <all_urls> の過剰権限を指摘する",
+        "[critical] web_accessible_resources の <all_urls> + JS 公開を指摘する",
+        "[critical] unsafe-eval 許可を指摘する",
+        "cookies history nativeMessaging の過剰権限を指摘する",
+        "最小権限への具体的修正案を示す",
+        "事実 前提 推定 を分離する"
+      ]
     },
     {
       "id": 3,
       "prompt": "Content ScriptとService Worker間のメッセージパッシングコードをレビューしてください:\n\n```typescript\n// content.ts\nwindow.addEventListener('message', (event) => {\n  // ページからのメッセージをそのままService Workerへ転送\n  chrome.runtime.sendMessage(event.data);\n});\n\n// background.ts\nchrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {\n  if (msg.type === 'DOM_INJECT') {\n    chrome.scripting.executeScript({\n      target: { tabId: sender.tab.id },\n      func: new Function(msg.code)  // 動的コード実行\n    });\n  }\n});\n```",
-      "expected_output": "origin検証なしのpostMessage bridge（任意ページからSWへ中継可能）・new Function()による動的コード実行・sender検証なし の3点を重大指摘として挙げ、具体的な修正コードを示す"
+      "checklist": [
+        "[critical] origin 未検証の postMessage bridge を指摘する",
+        "[critical] new Function による動的コード実行を指摘する",
+        "[critical] sender 検証欠如を指摘する",
+        "bridge 停止または allowlist 化を含む具体修正案を示す",
+        "各指摘に 重大度 悪用経路 影響 推奨対策 根拠コード/設定 を付ける",
+        "事実 前提 推定 を分離する"
+      ]
     }
   ]
 }

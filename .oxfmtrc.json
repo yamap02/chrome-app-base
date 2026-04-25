@@ -1,5 +1,8 @@
 {
   "ignorePatterns": [
+    ".agent",
+    ".omc",
+    ".claude",
     "node_modules",
     ".wxt",
     ".output",

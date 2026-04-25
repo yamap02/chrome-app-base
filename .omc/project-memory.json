@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1776799949004,
+  "lastScanned": 1776931352504,
   "projectRoot": "/Users/user/ai-dev/chrome-extention-base",
   "techStack": {
     "languages": [
@@ -88,7 +88,7 @@
       "path": "entrypoints",
       "purpose": null,
       "fileCount": 2,
-      "lastAccessed": 1776799948984,
+      "lastAccessed": 1776931352458,
       "keyFiles": [
         "background.ts",
         "content.ts"
@@ -98,7 +98,7 @@
       "path": "public",
       "purpose": "Public files",
       "fileCount": 1,
-      "lastAccessed": 1776799948985,
+      "lastAccessed": 1776931352459,
       "keyFiles": [
         "wxt.svg"
       ]
@@ -107,14 +107,14 @@
       "path": "tests",
       "purpose": "Test files",
       "fileCount": 0,
-      "lastAccessed": 1776799948990,
+      "lastAccessed": 1776931352470,
       "keyFiles": []
     },
     "utils": {
       "path": "utils",
       "purpose": "Utility functions",
       "fileCount": 4,
-      "lastAccessed": 1776799948990,
+      "lastAccessed": 1776931352471,
       "keyFiles": [
         "logger.ts",
         "settings.test.ts",

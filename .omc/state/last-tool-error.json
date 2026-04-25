@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"/usr/bin/open \\\"/Users/user/ai-dev/chrome-extention-base/.agent/skills/chrome-extension-background-security-workspace/iteration-1/review.html\\\"\",\"description\":\"Open review HTML with macOS ...",
-  "error": "Exit code 1\nThe application cannot be opened for an unexpected reason, error=Error Domain=NSOSStatusErrorDomain Code=-600 \"procNotFound: no eligible process with specified descriptor\" UserInfo={_LSLine=392, _LSFunction=_LSAnnotateAndSendAppleEventWithOptions, _LSFile=LSOpenCore.mm, _LSErrorMessage=procNotFound}",
-  "timestamp": "2026-04-21T20:37:12.605Z",
-  "retry_count": 2
-}

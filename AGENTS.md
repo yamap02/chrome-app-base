@@ -17,6 +17,11 @@ npm run compile      # TypeScript型チェック（emit不要）
 npm run zip          # 配布用ZIPを生成
 ```
 
+## 参照対象外
+
+- トークン消費を抑えるため、`node_modules/` 配下のファイルは検索・参照・読込の対象にしない。
+- 依存関係や利用バージョンの確認が必要な場合は、`package.json` とロックファイル（`package-lock.json` など）を参照する。
+
 ## アーキテクチャ
 
 ### エントリーポイント (`entrypoints/`)

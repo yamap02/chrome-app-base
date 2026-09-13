@@ -1,170 +1,108 @@
 # Chrome Extension Base
 
-WXT + React + TypeScript ベースの Chrome 拡張機能テンプレート。
-
-Chrome 拡張で頻出する最低限の土台を同梱済み。
-
-- Manifest v3 ベース設定
-- React 製 popup UI（メタ情報は `utils/metadata.ts` がSSOT）
-- background / content script エントリーポイント
-- `storage` 権限を使う設定永続化
-- Vitest によるユニットテスト
-- Oxlint / Oxfmt / Knip による保守支援
-- Playwright + Chrome for Testing による popup E2E smoke test
+WXT + React + TypeScript で Chrome 拡張機能を作り始めるためのベーステンプレートです。Manifest V3 を使い、popup、background、content script、設定永続化、品質検証の最小構成を含みます。
 
 ## 前提環境
 
-- Node.js
-- npm
-- Google Chrome
+- Node.js と npm
+- Google Chrome（開発・E2E smoke test 用）
 
-## セットアップ
+依存関係をインストールします。
 
 ```bash
 npm install
 ```
 
-## 開発コマンド
+## 開発とビルド
 
-```bash
-npm run dev           # Chrome 向け開発サーバー起動
-npm run dev:firefox   # Firefox 向け開発サーバー起動
-npm run build         # Chrome 向け本番ビルド
-npm run build:firefox # Firefox 向け本番ビルド
-npm run zip           # Chrome 向け配布 ZIP 生成
-npm run zip:firefox   # Firefox 向け配布 ZIP 生成
-npm run compile       # TypeScript 型検査
-npm test              # Vitest ユニットテスト
-npm run test:watch    # ユニットテスト watch
-npm run lint          # Oxlint
-npm run lint:fix      # Oxlint 自動修正
-npm run format        # Oxfmt 整形
-npm run format:check  # Oxfmt 整形チェック
-npm run knip          # 未使用コード検出
-npm run release:preflight # 公開前の placeholder/version 検査
-```
+| コマンド                | 用途                                           |
+| ----------------------- | ---------------------------------------------- |
+| `npm run dev`           | Chrome 向け開発サーバーを起動                  |
+| `npm run dev:firefox`   | Firefox 向け開発サーバーを起動                 |
+| `npm run build`         | Chrome 向け本番ビルド（`.output/chrome-mv3/`） |
+| `npm run build:firefox` | Firefox 向け本番ビルド                         |
+| `npm run zip`           | Chrome 向け配布 ZIP を生成                     |
+| `npm run zip:firefox`   | Firefox 向け配布 ZIP を生成                    |
 
-`npm run dev` 実行時、WXT が開発用ブラウザを起動します。拡張名・説明・対象URLは `utils/metadata.ts` から変更してください。
+`npm run dev` は WXT の開発用ブラウザを起動します。開発プロファイルは `.wxt/user-data` に保存されます。
 
-## 現在の実装内容
+## 実装されている機能
 
-### `wxt.config.ts`
+- Manifest V3、React module、extension pages 用 CSP
+- `storage` 権限による `local:settings` の設定保存
+- popup からの拡張機能 ON/OFF 切り替え
+- 設定のデフォルト値・型の正規化・version 1 migration
+- 設定変更を監視して content script の処理を開始・停止する仕組み
+- install 時と content script attach/detach の開発用ログ
+- popup の Error Boundary と保存失敗時の復旧表示
+- Oxlint、Oxfmt、Knip、TypeScript、Vitest、Node test、Playwright による検証
 
-- 拡張名 `Chrome Extension Base`
-- `storage` 権限のみ付与
-- extension pages 用 CSP 設定
-- React module 有効化
-- Chrome 起動時 `--disable-blink-features=AutomationControlled` 付与
-- `startUrls` に `https://example.com` 設定
+### 設定の動作
 
-### `entrypoints/background.ts`
-
-- インストール時フックのテンプレート実装
-- 開発時のみ install ログ出力
-
-### `entrypoints/content.ts`
-
-- `https://*.example.com/*` 向け content script テンプレート
-- `main(ctx)` と `ctx.onInvalidated()` による cleanup 実装
-- 開発時のみ実行 URL ログ出力
-
-### `entrypoints/popup/`
-
-- React popup UI
-- `ErrorBoundary` で popup 内例外を捕捉
-- `App.tsx` で拡張機能 ON/OFF トグル実装
-- `settingsStorage` と連携して状態永続化
-
-### `utils/storage.ts`
-
-- `Settings` 型定義
-- `local:settings` へ `{ enabled: true }` をデフォルト保存
+`utils/settings.ts` が設定モデルの SSOT です。初期値は `{ schemaVersion: 1, enabled: true }` です。popup は `utils/storage.ts` を介して設定を読み書きし、content script は初期値を読み込んだ後 `settingsStorage.watch()` で変更を受け取ります。`enabled` が `true` のときだけ対象ページの処理を実行します。現在の対象 URL はテンプレート用の `https://*.example.com/*` です。
 
 ## ディレクトリ構成
 
 ```text
 .
-|-- entrypoints/
-|   |-- background.ts
-|   |-- content.ts
-|   `-- popup/
-|       |-- App.tsx
-|       |-- ErrorBoundary.tsx
-|       |-- App.css
-|       |-- style.css
-|       `-- main.tsx
-|-- utils/
-|   |-- helpers.ts
-|   |-- helpers.test.ts
-|   `-- storage.ts
-|-- public/icon/
-|-- wxt.config.ts
-|-- vitest.config.ts
-`-- tsconfig.json
+├── entrypoints/
+│   ├── background.ts                 # Service Worker
+│   ├── content.ts                    # Content script
+│   └── popup/
+│       ├── App.tsx                   # Popup の画面
+│       ├── App.css / style.css       # Popup のスタイル
+│       ├── ErrorBoundary.tsx         # Popup の例外境界
+│       ├── components/SettingsToggle.tsx
+│       ├── hooks/useSettings.ts
+│       ├── index.html / main.tsx
+├── utils/
+│   ├── metadata.ts                   # メタ情報と対象 URL
+│   ├── logger.ts                     # 開発時ログ
+│   ├── settings.ts / settings.test.ts # 設定モデルとテスト
+│   └── storage.ts                    # WXT storage ラッパー
+├── tests/e2e/                        # Playwright smoke test
+├── tests/scripts/                    # Manifest・ZIP・公開前契約テスト
+├── public/icon/                      # 拡張機能アイコン
+├── wxt.config.ts                     # WXT / manifest 設定
+├── vitest.config.ts / tsconfig.json
+├── knip.json                         # 未使用コード検出設定
+└── Makefile                          # CI 相当の検証タスク
 ```
+
+## テストと品質検証
+
+```bash
+npm test                  # Vitest ユニットテスト
+npm run test:watch        # ユニットテストを watch
+npm run compile           # TypeScript 型検査
+npm run lint              # Oxlint
+npm run lint:fix          # Oxlint 自動修正
+npm run format            # Oxfmt 整形
+npm run format:check      # Oxfmt 整形チェック
+npm run knip              # 未使用コード検出
+npm run release:preflight # 雛形名・example.com・version の公開前検査
+```
+
+ビルド後の manifest、配布 ZIP、E2E まで含めた一括検証は次で実行します。
+
+```bash
+make ci
+```
+
+`make ci` は format check、lint、型検査、ユニットテスト、manifest/ZIP 契約テスト、Knip、Playwright smoke test を実行します。E2E には実行可能な Chrome が必要です。場所を指定する場合は `CHROME_BIN=/path/to/chrome make test-e2e-headless` を使います。CI では `CI=1` で xvfb を利用します。
 
 ## 新しい拡張機能へ流用する手順
 
-### 1. 拡張メタ情報変更
+1. `utils/metadata.ts` の `name`、`shortName`、`description`、`popupTitle`、`contentMatches`、`startUrls` を変更する。
+2. `wxt.config.ts` の `permissions` と必要な `host_permissions` を追加する。
+3. `entrypoints/content.ts` の対象サイト固有ロジックと cleanup 処理を実装する。
+4. `entrypoints/popup/App.tsx` と関連 CSS を製品向け UI に変更する。
+5. `utils/settings.ts` の `Settings`、デフォルト値、正規化処理を拡張し、必要なら `utils/storage.ts` の version/migrations を更新する。
+6. 常駐処理やイベント処理が必要なら `entrypoints/background.ts` に追加する。
+7. `npm run compile`、`npm test`、`make ci` を実行する。
 
-`wxt.config.ts` を変更。
+公開前には、`package.json` の version を `0.0.0` 以外にし、`utils/metadata.ts` に残る `Chrome Extension Base` と `example.com` の placeholder を製品固有の値へ置換してください。`npm run release:preflight` が置換漏れを検出します。
 
-- `manifest.name`
-- 必要な `permissions`
-- `host_permissions`
-- `webExt.startUrls`
+## TypeScript パスエイリアス
 
-### 2. content script 実装
-
-`entrypoints/content.ts` を変更。
-
-- `matches`
-- 対象サイト固有ロジック
-- cleanup 処理
-
-### 3. popup UI 実装
-
-`entrypoints/popup/App.tsx` を変更。
-
-- 表示テキスト
-- 設定 UI
-- 保存対象の状態
-
-必要に応じて `App.css` / `style.css` も変更。
-
-### 4. 設定スキーマ拡張
-
-`utils/settings.ts` と `utils/storage.ts` を変更。
-
-- `Settings` 型へ項目追加
-- `fallback`、`version`、`migrations` 更新
-
-### 5. background 処理追加
-
-常駐処理やイベント処理が必要なら `entrypoints/background.ts` を変更。
-
-## テスト
-
-### ユニットテスト
-
-`utils/helpers.test.ts` で `matchesPattern()` を検証。
-
-- 完全一致
-- パス向けワイルドカード
-- サブドメイン向けワイルドカード
-- ドメイン不一致
-- スキーム不一致
-- 正規表現特殊文字のエスケープ
-
-## 補足
-
-- `tsconfig.json` は `.wxt/tsconfig.json` 継承
-- `@/` エイリアスでルート参照可能
-- 配布前は `npm run release:preflight` で雛形の placeholder を検査
-
-## このテンプレート使用開始時の最低変更点
-
-- `wxt.config.ts` の拡張名と対象 URL
-- `entrypoints/content.ts` の `matches` と本体処理
-- `entrypoints/popup/App.tsx` の表示文言
-- `utils/storage.ts` の設定項目
+`tsconfig.json` は WXT が生成する `.wxt/tsconfig.json` を継承し、`@/` でリポジトリルートを参照できます。

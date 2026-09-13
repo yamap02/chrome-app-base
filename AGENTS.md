@@ -9,18 +9,18 @@ WXT + React + TypeScript を使った **Chrome 拡張機能開発の汎用ベー
 ## コマンド
 
 ```bash
-npm run dev          # 開発サーバー起動（.wxt/user-dataにログイン情報保持）
-npm run build        # プロダクションビルド → .output/chrome-mv3/
-npm test             # Vitestユニットテスト
-npm run test:watch   # テストをウォッチモードで実行
-npm run compile      # TypeScript型チェック（emit不要）
-npm run zip          # 配布用ZIPを生成
+bun run dev          # 開発サーバー起動（.wxt/user-dataにログイン情報保持）
+bun run build        # プロダクションビルド → .output/chrome-mv3/
+bun test             # Vitestユニットテスト
+bun run test:watch   # テストをウォッチモードで実行
+bun run compile      # TypeScript型チェック（emit不要）
+bun run zip          # 配布用ZIPを生成
 ```
 
 ## 参照対象外
 
 - トークン消費を抑えるため、`node_modules/` 配下のファイルは検索・参照・読込の対象にしない。
-- 依存関係や利用バージョンの確認が必要な場合は、`package.json` とロックファイル（`package-lock.json` など）を参照する。
+- 依存関係や利用バージョンの確認が必要な場合は、`package.json` と `bun.lock` を参照する。
 
 ## アーキテクチャ
 

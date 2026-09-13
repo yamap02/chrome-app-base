@@ -4,27 +4,27 @@ WXT + React + TypeScript で Chrome 拡張機能を作り始めるためのベ�
 
 ## 前提環境
 
-- Node.js と npm
+- Bun（Node.js互換ランタイム）
 - Google Chrome（開発・E2E smoke test 用）
 
 依存関係をインストールします。
 
 ```bash
-npm install
+bun install
 ```
 
 ## 開発とビルド
 
 | コマンド                | 用途                                           |
 | ----------------------- | ---------------------------------------------- |
-| `npm run dev`           | Chrome 向け開発サーバーを起動                  |
-| `npm run dev:firefox`   | Firefox 向け開発サーバーを起動                 |
-| `npm run build`         | Chrome 向け本番ビルド（`.output/chrome-mv3/`） |
-| `npm run build:firefox` | Firefox 向け本番ビルド                         |
-| `npm run zip`           | Chrome 向け配布 ZIP を生成                     |
-| `npm run zip:firefox`   | Firefox 向け配布 ZIP を生成                    |
+| `bun run dev`           | Chrome 向け開発サーバーを起動                  |
+| `bun run dev:firefox`   | Firefox 向け開発サーバーを起動                 |
+| `bun run build`         | Chrome 向け本番ビルド（`.output/chrome-mv3/`） |
+| `bun run build:firefox` | Firefox 向け本番ビルド                         |
+| `bun run zip`           | Chrome 向け配布 ZIP を生成                     |
+| `bun run zip:firefox`   | Firefox 向け配布 ZIP を生成                    |
 
-`npm run dev` は WXT の開発用ブラウザを起動します。開発プロファイルは `.wxt/user-data` に保存されます。
+`bun run dev` は WXT の開発用ブラウザを起動します。開発プロファイルは `.wxt/user-data` に保存されます。
 
 ## 実装されている機能
 
@@ -72,15 +72,15 @@ npm install
 ## テストと品質検証
 
 ```bash
-npm test                  # Vitest ユニットテスト
-npm run test:watch        # ユニットテストを watch
-npm run compile           # TypeScript 型検査
-npm run lint              # Oxlint
-npm run lint:fix          # Oxlint 自動修正
-npm run format            # Oxfmt 整形
-npm run format:check      # Oxfmt 整形チェック
-npm run knip              # 未使用コード検出
-npm run release:preflight # 雛形名・example.com・version の公開前検査
+bun test                  # Vitest ユニットテスト
+bun run test:watch        # ユニットテストを watch
+bun run compile           # TypeScript 型検査
+bun run lint              # Oxlint
+bun run lint:fix          # Oxlint 自動修正
+bun run format            # Oxfmt 整形
+bun run format:check      # Oxfmt 整形チェック
+bun run knip              # 未使用コード検出
+bun run release:preflight # 雛形名・example.com・version の公開前検査
 ```
 
 ビルド後の manifest、配布 ZIP、E2E まで含めた一括検証は次で実行します。
@@ -99,9 +99,9 @@ make ci
 4. `entrypoints/popup/App.tsx` と関連 CSS を製品向け UI に変更する。
 5. `utils/settings.ts` の `Settings`、デフォルト値、正規化処理を拡張し、必要なら `utils/storage.ts` の version/migrations を更新する。
 6. 常駐処理やイベント処理が必要なら `entrypoints/background.ts` に追加する。
-7. `npm run compile`、`npm test`、`make ci` を実行する。
+7. `bun run compile`、`bun test`、`make ci` を実行する。
 
-公開前には、`package.json` の version を `0.0.0` 以外にし、`utils/metadata.ts` に残る `Chrome Extension Base` と `example.com` の placeholder を製品固有の値へ置換してください。`npm run release:preflight` が置換漏れを検出します。
+公開前には、`package.json` の version を `0.0.0` 以外にし、`utils/metadata.ts` に残る `Chrome Extension Base` と `example.com` の placeholder を製品固有の値へ置換してください。`bun run release:preflight` が置換漏れを検出します。
 
 ## TypeScript パスエイリアス
 

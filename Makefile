@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 NODE ?= node
-NPM ?= npm
+BUN ?= bun
 BUILD_DIR := .output/chrome-mv3
 
 ifeq ($(shell uname -s),Darwin)
@@ -13,28 +13,28 @@ endif
 .PHONY: build compile format-check knip lint test-unit test-scripts manifest-contract zip zip-artifact-contract test-e2e-headless ci
 
 build:
-	$(NPM) run build
+	$(BUN) run build
 
 compile:
-	$(NPM) run compile
+	$(BUN) run compile
 
 format-check:
-	$(NPM) run format:check
+	$(BUN) run format:check
 
 knip:
-	$(NPM) run knip
+	$(BUN) run knip
 
 lint:
-	$(NPM) run lint
+	$(BUN) run lint
 
 test-unit:
-	$(NPM) test
+	$(BUN) test
 
 manifest-contract: build
 	$(NODE) --test tests/scripts/manifest-contract.test.mjs
 
 zip:
-	$(NPM) run zip
+	$(BUN) run zip
 
 zip-artifact-contract: zip
 	$(NODE) --test tests/scripts/zip-artifact.test.mjs

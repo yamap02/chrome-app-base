@@ -5,7 +5,7 @@ WXT + React + TypeScript ベースの Chrome 拡張機能テンプレート。
 Chrome 拡張で頻出する最低限の土台を同梱済み。
 
 - Manifest v3 ベース設定
-- React 製 popup UI
+- React 製 popup UI（メタ情報は `utils/metadata.ts` がSSOT）
 - background / content script エントリーポイント
 - `storage` 権限を使う設定永続化
 - Vitest によるユニットテスト
@@ -42,18 +42,18 @@ npm run format:check  # Oxfmt 整形チェック
 npm run knip          # 未使用コード検出
 ```
 
-`npm run dev` 実行時、WXT が開発用ブラウザを起動。`wxt.config.ts` では `.wxt/user-data` にログイン状態を保持しつつ、`https://www.google.com` を初期表示対象に設定済み。
+`npm run dev` 実行時、WXT が開発用ブラウザを起動します。拡張名・説明・対象URLは `utils/metadata.ts` から変更してください。
 
 ## 現在の実装内容
 
 ### `wxt.config.ts`
 
-- 拡張名 `My Chrome Extension`
+- 拡張名 `Chrome Extension Base`
 - `storage` 権限のみ付与
 - extension pages 用 CSP 設定
 - React module 有効化
 - Chrome 起動時 `--disable-blink-features=AutomationControlled` 付与
-- `startUrls` に `https://www.google.com` 設定
+- `startUrls` に `https://example.com` 設定
 
 ### `entrypoints/background.ts`
 
@@ -77,11 +77,6 @@ npm run knip          # 未使用コード検出
 
 - `Settings` 型定義
 - `local:settings` へ `{ enabled: true }` をデフォルト保存
-
-### `utils/helpers.ts`
-
-- URL パターン比較用 `matchesPattern()` 実装
-- ワイルドカード `*` 対応
 
 ## ディレクトリ構成
 

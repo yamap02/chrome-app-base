@@ -1,6 +1,7 @@
 import { logDebug } from "@/utils/logger";
+import { getSettings, settingsStorage } from "@/utils/storage";
 
-const CONTENT_SCRIPT_MATCHES = ["https://*.example.com/*"];
+import { EXTENSION_METADATA } from "@/utils/metadata";
 
 function startContentScript(currentUrl: string): () => void {
   logDebug("Content script attached", { url: currentUrl });
@@ -11,8 +12,23 @@ function startContentScript(currentUrl: string): () => void {
 }
 
 export default defineContentScript({
-  matches: CONTENT_SCRIPT_MATCHES,
+  matches: [...EXTENSION_METADATA.contentMatches],
   main() {
-    return startContentScript(window.location.href);
+    let cleanup: (() => void) | undefined;
+    let disposed = false;
+    const apply = (enabled: boolean) => {
+      cleanup?.();
+      cleanup = enabled ? startContentScript(window.location.href) : undefined;
+    };
+    void getSettings().then((settings) => {
+      if (!disposed) apply(settings.enabled);
+    });
+    const unwatch = settingsStorage.watch((settings) => apply(settings.enabled));
+    return () => {
+      disposed = true;
+      unwatch();
+      cleanup?.();
+      cleanup = undefined;
+    };
   },
 });

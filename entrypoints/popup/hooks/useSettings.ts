@@ -1,5 +1,5 @@
-import { useEffect, useEffectEvent, useState, useTransition } from "react";
-import { settingsStorage } from "@/utils/storage";
+import { useEffect, useState } from "react";
+import { getSettings, setSettings as persistSettings } from "@/utils/storage";
 import {
   getSettingsStatus,
   normalizeSettings,
@@ -10,7 +10,7 @@ import {
 type UseSettingsResult = {
   errorMessage: string | null;
   isLoaded: boolean;
-  isPending: boolean;
+  isSaving: boolean;
   settings: Settings;
   status: ReturnType<typeof getSettingsStatus>;
   toggle: () => Promise<void>;
@@ -30,25 +30,18 @@ export function useSettings(): UseSettingsResult {
   const [settings, setSettings] = useState<Settings>(normalizeSettings());
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isPending, startTransition] = useTransition();
-
-  const commitSettings = useEffectEvent((nextSettings: Settings) => {
-    startTransition(() => {
-      setSettings(nextSettings);
-    });
-  });
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     let isDisposed = false;
 
-    void settingsStorage
-      .getValue()
+    void getSettings()
       .then((storedSettings) => {
         if (isDisposed) {
           return;
         }
 
-        commitSettings(normalizeSettings(storedSettings));
+        setSettings(normalizeSettings(storedSettings));
         setErrorMessage(null);
       })
       .catch((error: unknown) => {
@@ -70,24 +63,28 @@ export function useSettings(): UseSettingsResult {
   }, []);
 
   const toggle = async () => {
+    if (isSaving) return;
     const previousSettings = settings;
     const nextSettings = toggleSettingsEnabled(previousSettings);
 
-    commitSettings(nextSettings);
+    setIsSaving(true);
+    setSettings(nextSettings);
     setErrorMessage(null);
 
     try {
-      await settingsStorage.setValue(nextSettings);
+      await persistSettings(nextSettings);
     } catch (error: unknown) {
-      commitSettings(previousSettings);
+      setSettings(previousSettings);
       setErrorMessage(toErrorMessage(error));
+    } finally {
+      setIsSaving(false);
     }
   };
 
   return {
     errorMessage,
     isLoaded,
-    isPending,
+    isSaving,
     settings,
     status: getSettingsStatus(settings.enabled),
     toggle,

@@ -1,12 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { stat, readFile } from "node:fs/promises";
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
+import { readFile as readBinaryFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const execFileAsync = promisify(execFile);
 const repoRoot = fileURLToPath(new URL("../../", import.meta.url));
 
 async function getZipArtifactPath() {
@@ -26,13 +24,18 @@ test("zip artifact 存在", async () => {
 
 test("zip artifact に必須配布物含有", async () => {
   const zipArtifactPath = await getZipArtifactPath();
-  const { stdout } = await execFileAsync("unzip", ["-Z1", zipArtifactPath], {
-    cwd: repoRoot,
-  });
-  const entries = stdout
-    .split("\n")
-    .map((entry) => entry.trim())
-    .filter(Boolean);
+  const archive = await readBinaryFile(zipArtifactPath);
+  const entries = [];
+  for (let offset = 0; offset + 46 <= archive.length; ) {
+    if (archive.readUInt32LE(offset) !== 0x02014b50) {
+      offset += 1;
+      continue;
+    }
+    const nameLength = archive.readUInt16LE(offset + 28);
+    entries.push(archive.toString("utf8", offset + 46, offset + 46 + nameLength));
+    offset +=
+      46 + nameLength + archive.readUInt16LE(offset + 30) + archive.readUInt16LE(offset + 32);
+  }
 
   assert.ok(entries.includes("manifest.json"));
   assert.ok(entries.includes("background.js"));

@@ -3,8 +3,8 @@ import { SettingsToggle } from "./components/SettingsToggle";
 import { useSettings } from "./hooks/useSettings";
 
 function App() {
-  const { errorMessage, isLoaded, isPending, settings, status, toggle } = useSettings();
-  const isActionDisabled = !isLoaded || isPending;
+  const { errorMessage, isLoaded, isSaving, settings, status, toggle } = useSettings();
+  const isActionDisabled = !isLoaded || isSaving;
 
   return (
     <main className="app-shell">

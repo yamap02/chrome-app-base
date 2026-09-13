@@ -1,19 +1,18 @@
 import { defineConfig } from "wxt";
-
-const EXTENSION_NAME = "Chrome Extension Base";
+import { EXTENSION_METADATA } from "./utils/metadata";
 
 export default defineConfig({
   modules: ["@wxt-dev/module-react"],
   manifest: {
-    name: EXTENSION_NAME,
-    short_name: "Ext Base",
-    description: "WXT + React + TypeScript based Chrome extension template",
+    name: EXTENSION_METADATA.name,
+    short_name: EXTENSION_METADATA.shortName,
+    description: EXTENSION_METADATA.description,
     permissions: ["storage"],
     action: {
-      default_title: EXTENSION_NAME,
+      default_title: EXTENSION_METADATA.popupTitle,
     },
   },
   webExt: {
-    startUrls: ["https://example.com"],
+    startUrls: [...EXTENSION_METADATA.startUrls],
   },
 });

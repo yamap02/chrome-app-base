@@ -12,14 +12,25 @@ describe("normalizeSettings", () => {
   });
 
   it("部分入力から不足値補完", () => {
-    expect(normalizeSettings({ enabled: false })).toEqual({ enabled: false });
+    expect(normalizeSettings({ enabled: false })).toEqual({ schemaVersion: 1, enabled: false });
+  });
+
+  it("壊れた入力を安全にデフォルトへ復旧", () => {
+    expect(normalizeSettings({ enabled: "yes" })).toEqual(DEFAULT_SETTINGS);
+    expect(normalizeSettings(null)).toEqual(DEFAULT_SETTINGS);
   });
 });
 
 describe("toggleSettingsEnabled", () => {
   it("enabled 反転", () => {
-    expect(toggleSettingsEnabled({ enabled: true })).toEqual({ enabled: false });
-    expect(toggleSettingsEnabled({ enabled: false })).toEqual({ enabled: true });
+    expect(toggleSettingsEnabled({ schemaVersion: 1, enabled: true })).toEqual({
+      schemaVersion: 1,
+      enabled: false,
+    });
+    expect(toggleSettingsEnabled({ schemaVersion: 1, enabled: false })).toEqual({
+      schemaVersion: 1,
+      enabled: true,
+    });
   });
 });
 

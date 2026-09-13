@@ -1,7 +1,0 @@
-node_modules/
-.wxt/
-.output/
-dist/
-coverage/
-*.lock
-package-lock.json

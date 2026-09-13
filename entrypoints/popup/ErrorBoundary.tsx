@@ -1,4 +1,4 @@
-import { Component, ReactNode } from "react";
+import { Component, type ReactNode } from "react";
 import { logDebug } from "@/utils/logger";
 
 interface Props {
@@ -11,17 +11,17 @@ interface State {
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-  state: State = { hasError: false };
+  override state: State = { hasError: false };
 
   static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error): void {
+  override componentDidCatch(error: Error): void {
     logDebug("Popup rendering failed", error);
   }
 
-  render() {
+  override render() {
     if (this.state.hasError) {
       return (
         <div className="error-boundary" role="alert">

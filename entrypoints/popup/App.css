@@ -83,6 +83,17 @@
     box-shadow 160ms ease;
 }
 
+.toggle-button:focus-visible {
+  outline: 3px solid var(--color-accent-strong);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle-button {
+    transition: none;
+  }
+}
+
 .toggle-button:hover:not(:disabled) {
   transform: translateY(-1px);
 }

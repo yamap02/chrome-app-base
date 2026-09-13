@@ -11,6 +11,9 @@ export default defineConfig({
     action: {
       default_title: EXTENSION_METADATA.popupTitle,
     },
+    content_security_policy: {
+      extension_pages: "script-src 'self'; object-src 'self';",
+    },
   },
   webExt: {
     startUrls: [...EXTENSION_METADATA.startUrls],

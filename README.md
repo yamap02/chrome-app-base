@@ -10,6 +10,7 @@ Chrome 拡張で頻出する最低限の土台を同梱済み。
 - `storage` 権限を使う設定永続化
 - Vitest によるユニットテスト
 - Oxlint / Oxfmt / Knip による保守支援
+- Playwright + Chrome for Testing による popup E2E smoke test
 
 ## 前提環境
 
@@ -40,6 +41,7 @@ npm run lint:fix      # Oxlint 自動修正
 npm run format        # Oxfmt 整形
 npm run format:check  # Oxfmt 整形チェック
 npm run knip          # 未使用コード検出
+npm run release:preflight # 公開前の placeholder/version 検査
 ```
 
 `npm run dev` 実行時、WXT が開発用ブラウザを起動します。拡張名・説明・対象URLは `utils/metadata.ts` から変更してください。
@@ -63,7 +65,7 @@ npm run knip          # 未使用コード検出
 ### `entrypoints/content.ts`
 
 - `https://*.example.com/*` 向け content script テンプレート
-- `main()` と cleanup 関数の雛形実装
+- `main(ctx)` と `ctx.onInvalidated()` による cleanup 実装
 - 開発時のみ実行 URL ログ出力
 
 ### `entrypoints/popup/`
@@ -132,10 +134,10 @@ npm run knip          # 未使用コード検出
 
 ### 4. 設定スキーマ拡張
 
-`utils/storage.ts` を変更。
+`utils/settings.ts` と `utils/storage.ts` を変更。
 
 - `Settings` 型へ項目追加
-- `defaultValue` 更新
+- `fallback`、`version`、`migrations` 更新
 
 ### 5. background 処理追加
 
@@ -158,7 +160,7 @@ npm run knip          # 未使用コード検出
 
 - `tsconfig.json` は `.wxt/tsconfig.json` 継承
 - `@/` エイリアスでルート参照可能
-- `assets/package-lock.json` が別配置で存在
+- 配布前は `npm run release:preflight` で雛形の placeholder を検査
 
 ## このテンプレート使用開始時の最低変更点
 

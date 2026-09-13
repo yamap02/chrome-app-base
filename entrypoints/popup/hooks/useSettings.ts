@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSettings, setSettings as persistSettings } from "@/utils/storage";
+import { getSettings, settingsStorage, setSettings as persistSettings } from "@/utils/storage";
 import {
   getSettingsStatus,
   normalizeSettings,
@@ -19,10 +19,7 @@ type UseSettingsResult = {
 const FALLBACK_ERROR_MESSAGE = "設定保存失敗。再試行して";
 
 function toErrorMessage(error: unknown): string {
-  if (error instanceof Error && error.message.length > 0) {
-    return error.message;
-  }
-
+  void error;
   return FALLBACK_ERROR_MESSAGE;
 }
 
@@ -59,6 +56,20 @@ export function useSettings(): UseSettingsResult {
 
     return () => {
       isDisposed = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let isDisposed = false;
+    const unwatch = settingsStorage.watch((nextSettings) => {
+      if (!isDisposed) {
+        setSettings(normalizeSettings(nextSettings));
+        setErrorMessage(null);
+      }
+    });
+    return () => {
+      isDisposed = true;
+      unwatch();
     };
   }, []);
 

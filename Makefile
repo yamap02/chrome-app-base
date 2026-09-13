@@ -43,6 +43,6 @@ test-scripts: manifest-contract zip-artifact-contract
 
 test-e2e-headless: build
 	@if [ -z "$(CHROME_BIN)" ] || [ ! -x "$(CHROME_BIN)" ]; then echo "CHROME_BIN not found: $(CHROME_BIN)"; exit 1; fi
-	CHROME_BIN="$(CHROME_BIN)" $(NODE) --test tests/e2e/headless-smoke.test.mjs
+	CHROME_BIN="$(CHROME_BIN)" $(if $(CI),xvfb-run -a,) $(NODE) --test tests/e2e/playwright-smoke.test.mjs
 
 ci: format-check lint compile test-unit test-scripts knip test-e2e-headless

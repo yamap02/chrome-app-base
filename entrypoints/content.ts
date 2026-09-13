@@ -13,7 +13,7 @@ function startContentScript(currentUrl: string): () => void {
 
 export default defineContentScript({
   matches: [...EXTENSION_METADATA.contentMatches],
-  main() {
+  main(ctx) {
     let cleanup: (() => void) | undefined;
     let disposed = false;
     const apply = (enabled: boolean) => {
@@ -24,11 +24,11 @@ export default defineContentScript({
       if (!disposed) apply(settings.enabled);
     });
     const unwatch = settingsStorage.watch((settings) => apply(settings.enabled));
-    return () => {
+    ctx.onInvalidated(() => {
       disposed = true;
       unwatch();
       cleanup?.();
       cleanup = undefined;
-    };
+    });
   },
 });

@@ -7,7 +7,11 @@ import {
 } from "@/utils/settings";
 
 export const settingsStorage = storage.defineItem<Settings>(SETTINGS_STORAGE_KEY, {
-  defaultValue: DEFAULT_SETTINGS,
+  fallback: DEFAULT_SETTINGS,
+  version: 1,
+  migrations: {
+    1: (oldValue: unknown) => normalizeSettings(oldValue),
+  },
 });
 
 export async function getSettings(): Promise<Settings> {

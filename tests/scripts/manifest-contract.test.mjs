@@ -20,6 +20,11 @@ test("manifest 契約維持", async () => {
   assert.deepEqual(manifest.permissions, ["storage"]);
   assert.equal(manifest.action?.default_popup, "popup.html");
   assert.equal(manifest.background?.service_worker, "background.js");
+  assert.equal(
+    manifest.content_security_policy?.extension_pages,
+    "script-src 'self'; object-src 'self';",
+  );
+  assert.equal(manifest.web_accessible_resources, undefined);
   assert.ok(
     manifest.content_scripts?.some((contentScript) =>
       contentScript.matches?.includes("https://*.example.com/*"),

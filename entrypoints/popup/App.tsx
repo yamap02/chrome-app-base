@@ -27,7 +27,11 @@ function App() {
 
       <footer className="app-footer">
         <span className="footer-status">{isLoaded ? "Storage ready" : "Loading settings"}</span>
-        {errorMessage ? <p className="error-text">{errorMessage}</p> : null}
+        {errorMessage ? (
+          <p className="error-text" role="alert">
+            {errorMessage}
+          </p>
+        ) : null}
       </footer>
     </main>
   );
